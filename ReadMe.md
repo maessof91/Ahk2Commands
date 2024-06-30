@@ -38,6 +38,11 @@ Setup to run at startup
 Best Practices
 -----------------------
 -Using this repo as a submodule to your own repo with your own ahk scripts is a better way to use it. See the submodule branch 
-  #Include %A_ScriptDir%\..\Ahk2CommandsIncludes.ahk is used to include a script in a parent folder to the repo
+
+    #Include %A_ScriptDir%\..\Ahk2CommandsIncludes.ahk
+
+ is used to include a script in a parent folder to the repo 
+
+
 -But when using as a template Best to keep your ahk code seperate from the base folder. Keep them in  "%A_ScriptDir%\Included" as improvements and updates will happen to the base folder
 
