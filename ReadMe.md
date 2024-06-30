@@ -24,6 +24,16 @@ Usage
 
 4. Enter or double click to execute selected command
 
+----------------
+Setup to run at startup
+----------------
+1. Create a shortcut to the ak2Commands.ahk script
+2. open gui
+3. search startup
+4. execute the command to open the startup folder
+5. move the shortcut to this folder
+6. (Optional) right click shortcut > Properties > Advanced > Run As Admin > ok > Apply > ok
+
 -----------------------
 Best Practices
 -----------------------
