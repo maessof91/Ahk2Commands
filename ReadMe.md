@@ -10,7 +10,7 @@ Installation
 -----------------
 1. Download ahk v2 at https://autohotkey.com/download/
 
-2. Clone repo 
+2. Clone repo (or hot Code button > Download as zip)
 
 ---------------------
 Usage
