@@ -6,3 +6,5 @@
 
 #Include %A_ScriptDir%\Included\Commands.ahk
 #Include %A_ScriptDir%\Included\Hotkeys.ahk
+
+#Include %A_ScriptDir%\..\Ahk2CommandsIncludes.ahk
