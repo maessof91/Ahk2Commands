@@ -158,8 +158,8 @@ AddCommand(function,description)
 }
 
 
-AddCommandWithParams("SayHello","Say","Will say word","Hello")
-AddCommandWithParams("SayBye","Say","Will say word","Bye")
+AddCommandWithParam("SayHello","Say","Will say word","Hello") 
+AddCommandWithParam("SayBye","Say","Will say word","Bye")
 AddCommandWithParam(commandName, functionName,description,parameter)
 {
     global allCommands
