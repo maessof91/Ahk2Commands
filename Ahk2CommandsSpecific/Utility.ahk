@@ -18,7 +18,7 @@ SortArrayByAscendingLength(arrayi)
             y++
             if (y + 1 > arrayi.Length)
                 break
-            if (StrLen(arrayi[y + 1]) < StrLen(arrayi[y])) 
+            if (StrLen(arrayi[y + 1].name) < StrLen(arrayi[y].name))   ; Error: P
             {
                 ; Swap the elements
                 temp := arrayi[y]

@@ -5,8 +5,8 @@
 ; ^ is ctrl 
 ; # is windowsKey
 
-;alt+2
-!2::
-{
-    Send("{enter}")
-}
+; alt+2 as enter
+; !2::
+; {
+;     Send("{enter}")
+; }
