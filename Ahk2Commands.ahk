@@ -4,11 +4,13 @@ Persistent
 
 global allCommands :=  [] ;The list of commands will be added to here using the Add functions
 
+
 #Include %A_ScriptDir%\Ahk2CommandsSpecific\Utility.ahk
 
 #Include %A_ScriptDir%\Included\Includes.ahk
 
 #Include %A_ScriptDir%\Ahk2CommandsSpecific\Logic.ahk
+
 
 ; keycombo to trigger gui is currently ctrl+capslock
 ^CapsLock:: 
@@ -24,6 +26,16 @@ global allCommands :=  [] ;The list of commands will be added to here using the 
     F16 & 2::
     {
         ExecuteSelectedCommand()
+    }
+
+    Down::
+    {
+        SelectNext()
+    }    
+
+    Up::
+    {
+        SelectPrevious()
     }
 #hotif
 

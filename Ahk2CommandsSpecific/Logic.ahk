@@ -4,6 +4,9 @@
 global allCommands
 SortArrayByAscendingLength(allCommands)
 
+
+
+
 global MyGui := Gui("+Resize")
 MyGui.SetFont("q4 s14", "Arial")
 MyGui.Add("Text", , "Search:")
@@ -45,9 +48,9 @@ UpdateList(Edit) {
     
     listView.Delete()  ; Clear the ListView
     for command in allCommands {
-        if (searchValue == "" || InStr(command, searchValue, false)) 
+        if (searchValue == "" || InStr(command.name, searchValue, false))   
         {    
-            listView.Add("", command)
+            listView.Add("", command.name)
         }
     }
     
@@ -63,13 +66,42 @@ ExecuteSelectedCommand()
 
 global selectedIndex:= 1
 onCommandSelected(GuiCtrlObj, Item, Selected)
+{    
+    if(Selected)
+    {
+        global selectedIndex
+        selectedIndex := Item
+        command := listView.GetText(selectedIndex)
+
+        foundCommand := findCommand(command)
+        
+        description := foundCommand.description
+
+        ToolTip(description)
+        SetTimer () => ToolTip(), -500
+    }
+}
+
+SelectNext()
 {
     global selectedIndex
-    selectedIndex := Item
-    command := listView.GetText(selectedIndex)
-    ToolTip(command)
-    SetTimer () => ToolTip(), -500
+    if(selectedIndex<listView.GetCount()-1)
+    {
+        listView.Modify(selectedIndex, "-Select")
+        listView.Modify(selectedIndex+1, "+Select")
+        selectedIndex++
+    }
+}
 
+SelectPrevious()
+{
+    global selectedIndex
+    if(selectedIndex>0)
+    {
+        listView.Modify(selectedIndex, "-Select")
+        listView.Modify(selectedIndex-1, "+Select")        
+        selectedIndex--
+    }
 }
 
 CallSelectedCommand() 
@@ -81,9 +113,12 @@ CallSelectedCommand()
     {
         MyGui.Hide()
         selectedCommand := listView.GetText(selectedIndex)
-        ToolTip("Executing " . selectedCommand)
-        SetTimer () => ToolTip(), -2000
-        %selectedCommand%()
+
+        foundCommand := findCommand(selectedCommand)
+        description := foundCommand.description
+        ToolTip("Executing " . description)
+        SetTimer () => ToolTip(), -2000        
+        foundCommand.Execute()
     } 
     else 
     {
@@ -94,22 +129,61 @@ CallSelectedCommand()
 OnListViewItemDoubleClick(listview, rowNumber)
 {
     MyGui.Hide()
-    rowText := listview.GetText(rowNumber)    
-    ToolTip("Executing " . rowText)
+    rowText := listview.GetText(rowNumber) 
+    foundCommand := findCommand(rowText)   
+    description := foundCommand.description
+    ToolTip("Executing " . description)
     SetTimer () => ToolTip(), -2000
-    %rowText%()
+    
+    foundCommand.Execute()
 }
+
 
 Add(function)
 {
     global allCommands
-    allCommands.Push(function.Name)
+
+    command := CommandClass(function.Name,function.Name,function.Name)
+
+    allCommands.Push(command)
 }
 
 AddCommand(function,description)
 {
     global allCommands
-    allCommands.Push(function)
+
+    command := CommandClass(function,function,description)
+
+    allCommands.Push(command)
+}
+
+
+AddCommandWithParams("SayHello","Say","Will say word","Hello")
+AddCommandWithParams("SayBye","Say","Will say word","Bye")
+AddCommandWithParam(commandName, functionName,description,parameter)
+{
+    global allCommands
+    command := CommandClass(commandName, functionName, description, [parameter])
+    allCommands.Push(command)
+}
+
+AddCommandWithTwoParams(commandName, functionName,description,parameter1,parameter2)
+{
+    global allCommands
+    command := CommandClass(commandName, functionName, description, [parameter1,parameter2])
+    allCommands.Push(command)
+}
+
+AddCommandWithThreeParams(commandName, functionName,description,parameter1,parameter2,parameter3)
+{
+    global allCommands
+    command := CommandClass(commandName, functionName, description, [parameter1,parameter2,parameter3])
+    allCommands.Push(command)
+}
+
+Say(param)
+{
+    MsgBox param
 }
 
 ;using the ` key when their is a bug message will open the line of code where the error is, and paste the error message
@@ -156,3 +230,53 @@ AddCommand(function,description)
     }  
 }
 #hotif
+
+findCommand(commandName)
+{
+    global allCommands
+    
+    i := 1
+    Loop 
+        {
+            if(allCommands[i].name == commandName)
+            {
+                return allCommands[i]
+            }
+            i++           
+        } Until i > allCommands.Length
+}
+
+
+class CommandClass {
+    ; Constructor
+    __New(name:="", functionName:="", description:="", parameters := [])
+    {
+        this.name := name
+        this.functionName := functionName
+        this.description := description
+        this.parameters := parameters
+    }
+
+    Execute()
+    {
+        if(this.parameters.Length == 0)
+        {
+            %this.functionName%()
+        }
+        else
+        if(this.parameters.Length == 1)
+        {
+            %this.functionName%(this.parameters[1])
+        }
+        else
+        if(this.parameters.Length == 2)
+        {
+            %this.functionName%(this.parameters[1],this.parameters[2])
+        }
+        else
+        if(this.parameters.Length == 3)
+        {
+            %this.functionName%(this.parameters[1],this.parameters[2],this.parameters[3])
+        }
+    }
+}
