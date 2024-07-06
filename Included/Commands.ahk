@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 
-AddCommand("Reload_ahk2Commands","Reload_ahk2Commands")
+AddCommand("Reload","Reload")
 Reload_ahk2Commands()
 {
   Reload ; Reload so that any changes can be loaded in
