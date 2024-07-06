@@ -85,7 +85,7 @@ onCommandSelected(GuiCtrlObj, Item, Selected)
 SelectNext()
 {
     global selectedIndex
-    if(selectedIndex<listView.GetCount()-1)
+    if(selectedIndex<listView.GetCount())
     {
         listView.Modify(selectedIndex, "-Select")
         listView.Modify(selectedIndex+1, "+Select")
@@ -116,7 +116,7 @@ CallSelectedCommand()
 
         foundCommand := findCommand(selectedCommand)
         description := foundCommand.description
-        ToolTip("Executing " . description)
+        ToolTip("Executing " . description) 
         SetTimer () => ToolTip(), -2000        
         foundCommand.Execute()
     } 
@@ -178,6 +178,18 @@ AddCommandWithThreeParams(commandName, functionName,description,parameter1,param
 {
     global allCommands
     command := CommandClass(commandName, functionName, description, [parameter1,parameter2,parameter3])
+    allCommands.Push(command)
+}
+
+AddCommandWithParameters(commandName, functionName, description := "",parameters := [])
+{
+    if(description == "")
+    {
+        description := commandName
+    }
+
+    global allCommands
+    command := CommandClass(commandName, functionName, description, parameters)
     allCommands.Push(command)
 }
 
