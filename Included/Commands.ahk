@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.0
 
-AddCommand("Reload","Reload")
-Reload_ahk2Commands()
+AddCommand("Reloadz","Reloadz")
+Reloadz()
 {
   Reload ; Reload so that any changes can be loaded in
 }

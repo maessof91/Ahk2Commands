@@ -13,8 +13,9 @@ global allCommands :=  [] ;The list of commands will be added to here using the 
 
 
 ; keycombo to trigger gui is currently ctrl+capslock
-^CapsLock:: 
+CapsLock:: 
 {
+    SetCapsLockState("Off")
     ShowGui()
 }
 
