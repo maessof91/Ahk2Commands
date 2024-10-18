@@ -4,15 +4,13 @@
 global allCommands
 SortArrayByAscendingLength(allCommands)
 
-
-
-global MyGui := Gui("+Resize")
+global MyGui := Gui("+Resize +AlwaysOnTop")
 MyGui.SetFont("q4 s14", "Arial")
 MyGui.Add("Text", , "Search:")
 
 global EditGui
 EditGui := MyGui.Add("Edit", "vSearchInput w600", "")
-EditGui.OnEvent("Change", (*) => UpdateList(EditGui))
+EditGui.OnEvent("Change", (*) => onSearchEdit(EditGui))
 
 global listView
 listView := MyGui.Add("ListView", "r5 w600 h350", ["Name"])
@@ -38,18 +36,18 @@ ShowGui() {
     global EditGui
     MyGui.Show()
     EditGui.Value := "" 
+    UpdateList("")
     EditGui.Focus()    
 }
 
-UpdateList(Edit) {
-    global allCommands, listView, filteredCommands
-    if(Edit is string)
-    {
-        searchValue := ''
-    } else
-    {
-        searchValue := Edit.Value      
-    }
+onSearchEdit(Edit)
+{
+    UpdateList(Edit.Value)
+}
+
+UpdateList(searchValue) {
+    global allCommands, listView, filteredCommands    
+
     
     listView.Delete()  ; Clear the ListView
     for command in allCommands {
@@ -101,7 +99,7 @@ SelectNext()
 SelectPrevious()
 {
     global selectedIndex
-    if(selectedIndex>0)
+    if(selectedIndex>1)
     {
         listView.Modify(selectedIndex, "-Select")
         listView.Modify(selectedIndex-1, "+Select")        

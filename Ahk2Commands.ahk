@@ -46,4 +46,6 @@ global allCommands :=  [] ;The list of commands will be added to here using the 
     }
 #hotif
 
-UpdateList('')
+
+
+
