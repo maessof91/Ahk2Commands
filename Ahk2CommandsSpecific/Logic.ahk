@@ -6,7 +6,6 @@ SortArrayByAscendingLength(allCommands)
 
 
 
-
 global MyGui := Gui("+Resize")
 MyGui.SetFont("q4 s14", "Arial")
 MyGui.Add("Text", , "Search:")
@@ -44,7 +43,13 @@ ShowGui() {
 
 UpdateList(Edit) {
     global allCommands, listView, filteredCommands
-    searchValue := Edit.Value
+    if(Edit is string)
+    {
+        searchValue := ''
+    } else
+    {
+        searchValue := Edit.Value      
+    }
     
     listView.Delete()  ; Clear the ListView
     for command in allCommands {
